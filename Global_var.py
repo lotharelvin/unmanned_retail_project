@@ -1,0 +1,2 @@
+
+Commodity_type=['Fruit',]
