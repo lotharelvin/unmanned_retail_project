@@ -1,2 +1,2 @@
 
-Commodity_type=['Fruit',]
+Commodity_type=['Fruit','Snack','Alcohol','Beverage']
