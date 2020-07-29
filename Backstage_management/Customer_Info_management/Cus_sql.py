@@ -75,7 +75,7 @@ con1.Connect_to_customer()
 con1.Show_tables()
 con1.Use_table("Cart")
 #con1.Insert_Cus_Info("22")
-con1.Del_Cus_Info_Id(999)
+#con1.Del_Cus_Info_Id(999)
 
 
 
