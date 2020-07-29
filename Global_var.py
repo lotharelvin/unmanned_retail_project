@@ -9,5 +9,5 @@ Commodity_dict={
 	'Moutai':'Alcohol'
 }
 
-Commodity_list=['Apple','Banana','Chips','Cola','Moutai']
+Commodity_list=['ID','Commodity_Test','Apple','Banana','Chips','Cola','Moutai','Hape']
 Customer_table_type=['Cart','Customer_Info','Pur_History']
