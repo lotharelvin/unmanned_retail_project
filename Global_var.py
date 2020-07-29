@@ -9,3 +9,4 @@ Commodity_dict={
 	'Moutai':'Alcohol'
 }
 
+Customer_table_type=['Cart','Customer_Info','Pur_History']
