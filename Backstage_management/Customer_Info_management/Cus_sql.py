@@ -94,20 +94,40 @@ class Connection_customer(object):
 			val=(Del_item)
 			self.__My_cursor.execute(sql % val)
 			self.__My_con.commit()
-		
+	
+	def Add_to_cart(self,ID,Pur_dict:dict):
+		self.__My_cursor=self.__My_con.cursor()
+		#check if this customer has a row in cart
+		self.__My_cursor.execute("SELECT * FROM Cart WHERE ID = %s",([ID]))
+		Mycheck=self.__My_cursor.fetchall()
+		if len(Mycheck) == 0:
+			print("Invalid ID: "+str(ID))
+			return
 
+		for item in Pur_dict:
+			print(item)
+			self.__My_cursor.execute("SELECT %s FROM Cart WHERE ID = %s" % (item,ID))
+			Origin_val=self.__My_cursor.fetchall()
+			Origin_val=list(Origin_val[0])
+			print(Origin_val)
+			New_val=Origin_val[0]+Pur_dict[item]
+			print(New_val)
+			self.__My_cursor.execute("UPDATE Cart SET %s = %s WHERE ID = %s" % (item,New_val,ID))
+			self.__My_con.commit()
 
+			
 con1=Connection_customer()
 con1.Connect_to_customer()
 #con1.Show_tables()
 #con1.Use_table("Cart")
 #con1.Insert_Cus_Info("22")
 #con1.Del_Cus_Info_Id(999)
-Del=['Apple']
+#Del=['Apple']
 #print(Global_var.Commodity_list)
-con1.Renew_Cart(Global_var.Commodity_list)
-con1.Del_Cart(Del)
+#con1.Renew_Cart(Global_var.Commodity_list)
+#con1.Del_Cart(Del)
 
+con1.Add_to_cart(1,{'Apple':1})
 
 
 
