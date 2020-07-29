@@ -1,5 +1,7 @@
 import mysql.connector
-
+import sys
+sys.path.append('/Users/ouyangyikang/unmanned_retail_project')
+import Global_var
 
 class Connection_customer(object):
 	"""docstring for Connection_sql"""
@@ -37,17 +39,31 @@ class Connection_customer(object):
 			for x in self.__My_cursor:
 				print(x)
 
-	def Use_table(self,Table_name):
-		self.__My_cursor.execute("ALTER TABLE "+Table_name)
-		print(self.__My_cursor)
+	def Use_table(self,Table_name:str):
+		if Table_name not in Global_var.Customer_table_type:
+			print("Wrong Table Name")
+			return
+		else:
+			self.__My_cursor.execute("ALTER TABLE "+Table_name)
+			print(self.__My_cursor)
+
+
+	def Insert_Cus_Info(self,FaceID:str):
+			self.__My_cursor.execute("ALTER TABLE Customer_Info")
+			sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
+
+			val=([FaceID])
+			self.__My_cursor.execute(sql,val)
+			self.__My_con.commit()
 
 		
-
 
 con1=Connection_customer()
 con1.Connect_to_customer()
 con1.Show_tables()
-con1.Use_table("dx")
+con1.Use_table("Cart")
+con1.Insert_Cus_Info("22")
+
 
 
 
