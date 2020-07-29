@@ -49,20 +49,33 @@ class Connection_customer(object):
 
 
 	def Insert_Cus_Info(self,FaceID:str):
-			self.__My_cursor.execute("ALTER TABLE Customer_Info")
-			sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
+		self.__My_cursor.execute("ALTER TABLE Customer_Info")
+		sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
 
-			val=([FaceID])
-			self.__My_cursor.execute(sql,val)
-			self.__My_con.commit()
+		val=([FaceID])
+		self.__My_cursor.execute(sql,val)
+		self.__My_con.commit()
 
-		
+	def Del_Cus_Info_Face(self,FaceID:str):
+		self.__My_cursor.execute("ALTER TABLE Customer_Info")
+		sql=("DELETE FROM Customer_Info WHERE FACEID = %s")
+		val=([FaceID])
+		self.__My_cursor.execute(sql,val)
+		self.__My_con.commit()
+
+	def Del_Cus_Info_Id(self,ID):
+		self.__My_cursor.execute("ALTER TABLE Customer_Info")
+		sql=("DELETE FROM Customer_Info WHERE ID = %s")
+		val=([ID])
+		self.__My_cursor.execute(sql,val)
+		self.__My_con.commit()
 
 con1=Connection_customer()
 con1.Connect_to_customer()
 con1.Show_tables()
 con1.Use_table("Cart")
-con1.Insert_Cus_Info("22")
+#con1.Insert_Cus_Info("22")
+con1.Del_Cus_Info_Id(999)
 
 
 
