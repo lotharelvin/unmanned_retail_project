@@ -86,7 +86,7 @@ class Connection_customer(object):
 				self.__My_con.commit()
 
 
-	def Del_Cart(self,Del_list:list):
+	def CLear_Cart(self,Del_list:list):
 		self.__My_cursor=self.__My_con.cursor()
 
 		for Del_item in Del_list:
@@ -105,17 +105,17 @@ class Connection_customer(object):
 			return
 
 		for item in Pur_dict:
-			print(item)
+			# print(item)
 			self.__My_cursor.execute("SELECT %s FROM Cart WHERE ID = %s" % (item,ID))
 			Origin_val=self.__My_cursor.fetchall()
 			Origin_val=list(Origin_val[0])
-			print(Origin_val)
+			# print(Origin_val)
 			New_val=Origin_val[0]+Pur_dict[item]
-			print(New_val)
+			# print(New_val)
 			self.__My_cursor.execute("UPDATE Cart SET %s = %s WHERE ID = %s" % (item,New_val,ID))
 			self.__My_con.commit()
 
-			
+
 con1=Connection_customer()
 con1.Connect_to_customer()
 #con1.Show_tables()
@@ -127,7 +127,7 @@ con1.Connect_to_customer()
 #con1.Renew_Cart(Global_var.Commodity_list)
 #con1.Del_Cart(Del)
 
-con1.Add_to_cart(1,{'Apple':1})
+con1.Add_to_cart(1,{'Apple':1,'Cola':2})
 
 
 
