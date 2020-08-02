@@ -180,13 +180,31 @@ class Connection_customer(object):
 			# print(New_val)
 			self.__My_cursor.execute("UPDATE Pur_History SET %s = %s WHERE ID = %s" % (item,New_val,ID))
 			self.__My_con.commit()
+		
+		self.__My_cursor.execute("UPDATE Pur_History SET Last_Time = %s WHERE ID = %s" % (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),ID))
+		self.__My_con.commit()
 
 	def Settlement(self,ID):
 		self.__My_cursor=self.__My_con.cursor()
 		for x in Global_var.Commodity_list:
+			print(x)
 			self.__My_cursor.execute("SELECT %s FROM Cart WHERE ID = %s  " % (x,ID))
 			This_Cart=self.__My_cursor.fetchall()
-			print(This_Cart)
+			This_Cart=list(This_Cart[0])
+			
+
+			
+			self.__My_cursor.execute("SELECT %s FROM Pur_History WHERE ID = %s" % (x,ID))
+			Origin_val=self.__My_cursor.fetchall()
+			Origin_val=list(Origin_val[0])
+
+			Now_val=This_Cart[0]+Origin_val[0]
+			
+			self.__My_cursor.execute("UPDATE Pur_History SET %s = %s WHERE ID =%s" % (x,Now_val,ID))
+			self.__My_con.commit()
+
+		self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s ",([ID]))
+		self.__My_con.commit()
 
 con1=Connection_customer()
 con1.Connect_to_customer()
@@ -198,8 +216,9 @@ con1.Connect_to_customer()
 #print(Global_var.Commodity_list)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Del_Cart(Del)
-#con1.Create_Pur_His(1)
-#con1.Add_to_cart(2,{'Apple':1,'Cola':2})
+con1.Create_Pur_His(1)
+con1.Creat_cart(1)
+con1.Add_to_cart(1,{'Apple':1,'Cola':2})
 #con1.Drop_cus_cart(1)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Renew_Pur_History(Global_var.Pur_History_List)
