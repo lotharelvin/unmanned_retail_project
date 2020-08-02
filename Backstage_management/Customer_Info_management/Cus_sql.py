@@ -70,6 +70,7 @@ class Connection_customer(object):
 		self.__My_con.commit()
 
 	def Renew_Cart(self,New_list:list):
+		#New_List is Global_var.Pur_History_List
 		self.__My_cursor=self.__My_con.cursor()
 		self.__My_cursor.execute("select COLUMN_NAME from information_schema.COLUMNS where table_name = 'Cart'")
 		Old_List=[]
@@ -78,23 +79,35 @@ class Connection_customer(object):
 			print(y)
 			Old_List.append(y[0])
 
+		for x in Old_List:
+			if x not in New_list:
+				self.__My_cursor.execute("ALTER TABLE Cart DROP COLUMN %s" % (x))
+				self.__My_con.commit()
+
 		for New_item in New_list:
 			if New_item not in Old_List:
+				print(New_item)
 				sql="ALTER TABLE Cart add COLUMN  %s INT UNSIGNED DEFAULT 0"
 				val=(New_item)
 				self.__My_cursor.execute(sql % val)
 				self.__My_con.commit()
 
 
-	def CLear_Cart(self,Del_list:list):
-		self.__My_cursor=self.__My_con.cursor()
+	# def CLear_Cart(self,Del_list:list):
+	# 	self.__My_cursor=self.__My_con.cursor()
 
-		for Del_item in Del_list:
-			sql="ALTER TABLE Cart DROP COLUMN %s"
-			val=(Del_item)
-			self.__My_cursor.execute(sql % val)
-			self.__My_con.commit()
-	
+	# 	for Del_item in Del_list:
+	# 		sql="ALTER TABLE Cart DROP COLUMN %s"
+	# 		val=(Del_item)
+	# 		self.__My_cursor.execute(sql % val)
+	# 		self.__My_con.commit()
+
+	def Creat_cart(self,ID):
+		self.__My_cursor=self.__My_con.cursor()
+		self.__My_cursor.execute("INSERT INTO Cart (ID) VALUES (%s)" % (ID))
+		self.__My_con.commit()
+
+
 	def Add_to_cart(self,ID,Pur_dict:dict):
 		self.__My_cursor=self.__My_con.cursor()
 		#check if this customer has a row in cart
@@ -120,7 +133,60 @@ class Connection_customer(object):
 		self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s" % (ID))
 		self.__My_con.commit()
 
-	
+	def Renew_Pur_History(self,New_list):
+		#New_List is Global_var.Pur_History_List
+		self.__My_cursor=self.__My_con.cursor()
+		self.__My_cursor.execute("select COLUMN_NAME from information_schema.COLUMNS where table_name = 'Pur_History'")
+		Old_List=[]
+		for x in self.__My_cursor:
+			y=list(x)
+			print(y)
+			Old_List.append(y[0])
+
+		for x in Old_List:
+			if x not in New_list:
+				self.__My_cursor.execute("ALTER TABLE Pur_History DROP COLUMN %s" % (x))
+				self.__My_con.commit()
+
+		for New_item in New_list:
+			if New_item not in Old_List:
+				print(New_item)
+				sql="ALTER TABLE Pur_History add COLUMN  %s INT UNSIGNED DEFAULT 0"
+				val=(New_item)
+				self.__My_cursor.execute(sql % val)
+				self.__My_con.commit()
+
+	def Create_Pur_His(self,ID):
+		self.__My_cursor=self.__My_con.cursor()
+		self.__My_cursor.execute("INSERT INTO Pur_History (ID) VALUES (%s)" % (ID))
+		self.__My_con.commit()
+
+	def Add_to_Pur_His(self,ID,Pur_dict):
+		self.__My_cursor=self.__My_con.cursor()
+		#check if this customer has a row in cart
+		self.__My_cursor.execute("SELECT * FROM Pur_History WHERE ID = %s",([ID]))
+		Mycheck=self.__My_cursor.fetchall()
+		if len(Mycheck) == 0:
+			print("Invalid ID: "+str(ID))
+			return
+
+		for item in Pur_dict:
+			# print(item)
+			self.__My_cursor.execute("SELECT %s FROM Pur_History WHERE ID = %s" % (item,ID))
+			Origin_val=self.__My_cursor.fetchall()
+			Origin_val=list(Origin_val[0])
+			# print(Origin_val)
+			New_val=Origin_val[0]+Pur_dict[item]
+			# print(New_val)
+			self.__My_cursor.execute("UPDATE Pur_History SET %s = %s WHERE ID = %s" % (item,New_val,ID))
+			self.__My_con.commit()
+
+	def Settlement(self,ID):
+		self.__My_cursor=self.__My_con.cursor()
+		for x in Global_var.Commodity_list:
+			self.__My_cursor.execute("SELECT %s FROM Cart WHERE ID = %s  " % (x,ID))
+			This_Cart=self.__My_cursor.fetchall()
+			print(This_Cart)
 
 con1=Connection_customer()
 con1.Connect_to_customer()
@@ -130,12 +196,15 @@ con1.Connect_to_customer()
 #con1.Del_Cus_Info_Id(999)
 #Del=['Apple']
 #print(Global_var.Commodity_list)
-#con1.Renew_Cart(Global_var.Commodity_list)
+#con1.Renew_Cart(Global_var.Cart_list)
 #con1.Del_Cart(Del)
-
-#con1.Add_to_cart(1,{'Apple':1,'Cola':2})
-con1.Drop_cus_cart(1)
-
+#con1.Create_Pur_His(1)
+#con1.Add_to_cart(2,{'Apple':1,'Cola':2})
+#con1.Drop_cus_cart(1)
+#con1.Renew_Cart(Global_var.Cart_list)
+#con1.Renew_Pur_History(Global_var.Pur_History_List)
+#con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
+con1.Settlement(1)
 
 
 	
