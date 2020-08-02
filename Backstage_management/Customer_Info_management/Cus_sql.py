@@ -115,6 +115,12 @@ class Connection_customer(object):
 			self.__My_cursor.execute("UPDATE Cart SET %s = %s WHERE ID = %s" % (item,New_val,ID))
 			self.__My_con.commit()
 
+	def Drop_cus_cart(self,ID):
+		self.__My_cursor=self.__My_con.cursor()
+		self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s" % (ID))
+		self.__My_con.commit()
+
+	
 
 con1=Connection_customer()
 con1.Connect_to_customer()
@@ -127,7 +133,8 @@ con1.Connect_to_customer()
 #con1.Renew_Cart(Global_var.Commodity_list)
 #con1.Del_Cart(Del)
 
-con1.Add_to_cart(1,{'Apple':1,'Cola':2})
+#con1.Add_to_cart(1,{'Apple':1,'Cola':2})
+con1.Drop_cus_cart(1)
 
 
 
