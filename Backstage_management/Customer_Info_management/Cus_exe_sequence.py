@@ -15,7 +15,7 @@ class Cus_exe_thd(threading.Thread,object):
 	def Check_cus():
 		flag=cus_con.Has_cus()
 		if flag== True:
-			cus_con.Insert_Cus_Info
+			
 
 	
 		

@@ -1,4 +1,3 @@
-
 class Commodity(object):
 	"""docstring for Commodity"""
 	def __init__(self, ID: int, Price: float, Inventory: int,Shelf: int,Type: str):
@@ -8,6 +7,13 @@ class Commodity(object):
 		self.Inventory=Inventory
 		self.Shelf=Shelf
 		self.Type=Type
+
+	def myprint(self):
+				print("ID is",self.ID)
+				print("Price is",self.Price)
+				print("Inventory is",self.Inventory)
+				print("Shelf is",self.Shelf)
+				print("Type is",self.Type)
 
 	def Change_ID(self,New_ID):
 		self.ID=New_ID

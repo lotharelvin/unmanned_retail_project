@@ -58,10 +58,15 @@ class Connection_customer(object):
 
 	def Insert_Cus_Info(self,FaceID:str):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
-		sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
-		val=([FaceID])
-		self.__My_cursor.execute(sql , val)
-		self.__My_con.commit()
+		self.__My_cursor.execute("SELECT * FROM Customer_Info WHERE FaceID = %s" % (FaceID))
+		x=self.__My_cursor.fetchone()
+		if type(x)!=None:
+			sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
+			val=([FaceID])
+			self.__My_cursor.execute(sql , val)
+			self.__My_con.commit()
+		else:
+			print("This person already in record")
 
 	def Del_Cus_Info_Face(self,FaceID:str):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
@@ -76,6 +81,16 @@ class Connection_customer(object):
 		val=([ID])
 		self.__My_cursor.execute(sql , val)
 		self.__My_con.commit()
+
+	def Get_Id(self,FaceID:str):
+		self.__My_cursor.execute("ALTER TABLE Customer_Info")
+		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s " % (FaceID))
+		for x in self.__My_cursor:
+			ID=x[0]
+
+		return ID
+		
+
 
 	def Renew_Cart(self,New_list:list):
 		#New_List is Global_var.Pur_History_List
@@ -224,6 +239,7 @@ con1.Connect_to_customer()
 #print(Global_var.Commodity_list)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Del_Cart(Del)
+<<<<<<< HEAD
 flag=con1.Has_cus(8)
 print(flag)
 # con1.Create_Pur_His(1)
@@ -233,6 +249,15 @@ print(flag)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Renew_Pur_History(Global_var.Pur_History_List)
 #con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
+=======
+con1.Insert_Cus_Info(23)
+# con1.Creat_cart(1)
+# con1.Add_to_cart(1,{'Chips':1,'Moutai':2})
+# #con1.Drop_cus_cart(1)
+# #con1.Renew_Cart(Global_var.Cart_list)
+# #con1.Renew_Pur_History(Global_var.Pur_History_List)
+# #con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
+>>>>>>> master
 # con1.Settlement(1)
 
 
