@@ -74,7 +74,7 @@ def detect_face(image):
     return res
 
 
-def search_customer(image, groupIdList):
+def search_customer(image):
     # Activate BaiduAI
     APP_ID = '21866956'
     API_KEY = '3GpEYKemawrtV8FW9wNUmi7h'
@@ -83,6 +83,7 @@ def search_customer(image, groupIdList):
 
     # Video Capture
     imageType = "BASE64"
+    groupIdList = "Customer"
     customer_info = client.search(image, imageType, groupIdList)
     customer = CapCustomer()
 
@@ -126,6 +127,13 @@ def search_customer(image, groupIdList):
         print(customer_info['error_code'])
         print(customer_info['error_msg'])
         return customer
+
+
+def get_cus_FaceID():
+    image = capture_customer()
+    customer = search_customer(image)
+    FaceID = CapCustomer.get_cus_FaceID(customer)
+    return FaceID
 
 
 

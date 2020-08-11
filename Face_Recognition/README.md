@@ -18,11 +18,11 @@ pip install numpy
 
 #### 怎么注册客户脸部信息
 
-- 注册成为会员客户
+- 注册成为会员客户（Registered Customer）
 
   - 扫描小程序二维码
 
-    ![小程序二维码]()
+    ![小程序二维码](https://github.com/lotharelvin/unmanned_retail_project/blob/master/Face_Recognition/QR_Code.png)
 
   - 或者登录网址 https://ai.baidu.com/facekit/page/form/1FE58A340DA24D378378C5F8106E79AD
 
@@ -35,13 +35,8 @@ pip install numpy
 ```python
 import defines
 
-image = defines.capture_customer()
-groupIdList = "Customer" 
-customer = defines.search_customer(image, groupIdList)
-customer_id = defines.CapCustomer.get_customer_id(customer)
-
-if customer.customer_id != 0:
-    FaceID = defines.CapCustomer.get_cus_FaceID(customer)
+FaceID = defines.get_cus_FaceID()
+print(FaceID)
 
 ```
 
@@ -49,16 +44,24 @@ if customer.customer_id != 0:
 
 ```
 Registered Customer
-18028606235(登记手机号)Customer
+18028606235(登记手机号)Customer <-- FaceID
 (or) 
 Walk-in Customer
-123468732545281(时间戳)WalkInCustomer
+123468732545281(时间戳)WalkInCustomer <-- FaceID
 (or) 
 Registered As Walk-in Customer, Please Try Again
 (or) 
 222202 
 face pic not found
+0 <-- FaceID (当FaceID输出为0时，可以忽略)
 ```
+
+#### 版本历史
+
+| 版本   | 版本改动内容概要                                             |
+| ------ | :----------------------------------------------------------- |
+| v1.0.0 | 实现了在现有人脸库中进行人脸识别的功能                       |
+| v1.0.1 | 增加了对Walk-in客户的现场注册并识别功能，优化了FaceID的输出接口 |
 
 #### 环境
 
