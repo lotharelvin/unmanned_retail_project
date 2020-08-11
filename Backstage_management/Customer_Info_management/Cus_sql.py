@@ -47,6 +47,14 @@ class Connection_customer(object):
 			self.__My_cursor.execute("ALTER TABLE "+Table_name)
 			print(self.__My_cursor)
 
+	def Has_cus(self,FaceID):
+		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s" % (FaceID))
+		Mycheck=self.__My_cursor.fetchall();
+		if len(Mycheck) == 0:
+			return False
+		else:
+			return True
+
 
 	def Insert_Cus_Info(self,FaceID:str):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
@@ -216,14 +224,16 @@ con1.Connect_to_customer()
 #print(Global_var.Commodity_list)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Del_Cart(Del)
-con1.Create_Pur_His(1)
-con1.Creat_cart(1)
-con1.Add_to_cart(1,{'Apple':1,'Cola':2})
+flag=con1.Has_cus(8)
+print(flag)
+# con1.Create_Pur_His(1)
+# con1.Creat_cart(1)
+# con1.Add_to_cart(1,{'Apple':1,'Cola':2})
 #con1.Drop_cus_cart(1)
 #con1.Renew_Cart(Global_var.Cart_list)
 #con1.Renew_Pur_History(Global_var.Pur_History_List)
 #con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
-con1.Settlement(1)
+# con1.Settlement(1)
 
 
 	
