@@ -18,7 +18,7 @@ pip install numpy
 
 - 扫描小程序二维码
 
-  ![小程序二维码](https://github.com/lotharelvin/unmanned_retail_project/blob/master/Face_Recognition/QR_Code.png)
+  ![小程序二维码](https://github.com/lotharelvin/unmanned_retail_project/blob/master/Face_Recognition/QR_Code.jpg)
 
 - 或者登录网址 https://ai.baidu.com/facekit/page/form/1FE58A340DA24D378378C5F8106E79AD
 
