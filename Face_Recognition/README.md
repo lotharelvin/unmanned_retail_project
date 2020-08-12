@@ -2,16 +2,18 @@
 
 Author：KCLi2000 likwokc@mail2.sysu.edu.cn
 
-Version: v1.0.1
+Version: v1.1.1
 
 #### 依赖库
 
 由于baiduAI的在线人脸识别功能要通过URL请求，因此需要调用requests库；同时，baiduAI要求送进图片的格式是base64格式，因此我们需要base64，numpy库来进行图片格式转换。
 
 ```
-pip install base64
+pip install pybase64
 pip install requests
-pip install numpy
+pip install python-opencv
+pip install baidu-aip
+(sudo) python setup.py install
 ```
 
 另外，还需要安装OpenCV库来进行摄像头调用和图片获取，网上教程带带的多
@@ -33,10 +35,17 @@ pip install numpy
 #### How to use
 
 ```python
+#test.py
 import defines
 
 FaceID = defines.get_cus_FaceID()
 print(FaceID)
+#-----
+
+cd Face_Recognition
+pip install baidu-aip
+sudo python setup.py intall
+./test.py
 
 ```
 
@@ -61,11 +70,14 @@ face pic not found
 | 版本   | 版本改动内容概要                                             |
 | ------ | :----------------------------------------------------------- |
 | v1.0.0 | 实现了在现有人脸库中进行人脸识别的功能                       |
-| v1.0.1 | 增加了对Walk-in客户的现场注册并识别功能，优化了FaceID的输出接口 |
+| v1.1.0 | 增加了对Walk-in客户的现场注册并识别功能，优化了FaceID的输出接口 |
+| v1.1.1 | 针对无门禁进入场景，优化了对Walk-in客户注册识别的功能        |
 
 #### 环境
 
-我自己的电脑环境是Windows10 + Pycharm，不知道其它系统或IDE行8行，不行再改
+我自己的电脑环境是**Windows10 + Pycharm**，不知道其它系统或IDE行8行，不行再改.
+
+**实测ubuntu18.04+python2.7也行**
 
 #### Reference
 https://ai.baidu.com/ai-doc/FACE/ek37c1qiz

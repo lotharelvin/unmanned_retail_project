@@ -1,4 +1,5 @@
 import defines
 
-FaceID = defines.get_cus_FaceID()
-print(FaceID)
+while 1:
+    FaceID = defines.get_capcus_FaceID()
+    print(FaceID)
