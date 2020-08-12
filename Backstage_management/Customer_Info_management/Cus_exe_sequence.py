@@ -1,10 +1,11 @@
-import defines 
 import threading
 import time
 import Cus_sql
 import sys
 sys.path.append('/Users/ouyangyikang/unmanned_retail_project')
+sys.path.append('/Users/ouyangyikang/unmanned_retail_project/Face_Recognition')
 import Global_var
+import defines 
 
 Cus_con=Cus_sql.Connection_customer()
 class Cus_exe_thd(threading.Thread,object):
