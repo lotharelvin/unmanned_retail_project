@@ -47,18 +47,21 @@ class Connection_customer(object):
 			self.__My_cursor.execute("ALTER TABLE "+Table_name)
 			print(self.__My_cursor)
 
+
 	def Has_cus(self,FaceID):
-		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s" % (FaceID))
+		
+		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s "% (FaceID))
+		
 		Mycheck=self.__My_cursor.fetchall();
+		print(Mycheck)
 		if len(Mycheck) == 0:
 			return False
 		else:
 			return True
 
-
 	def Insert_Cus_Info(self,FaceID:str):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
-		self.__My_cursor.execute("SELECT * FROM Customer_Info WHERE FaceID = %s" % (FaceID))
+		self.__My_cursor.execute("SELECT * FROM Customer_Info WHERE FaceID = %s " % (FaceID))
 		x=self.__My_cursor.fetchone()
 		if type(x)!=None:
 			sql=("INSERT INTO Customer_Info (FACEID) VALUES ( %s )")
@@ -83,11 +86,11 @@ class Connection_customer(object):
 		self.__My_con.commit()
 
 	def Get_Id(self,FaceID:str):
+		ID=-1
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
 		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s " % (FaceID))
 		for x in self.__My_cursor:
 			ID=x[0]
-
 		return ID
 		
 
@@ -125,7 +128,7 @@ class Connection_customer(object):
 	# 		self.__My_cursor.execute(sql % val)
 	# 		self.__My_con.commit()
 
-	def Creat_cart(self,ID):
+	def Create_cart(self,ID):
 		self.__My_cursor=self.__My_con.cursor()
 		self.__My_cursor.execute("INSERT INTO Cart (ID) VALUES (%s)" % (ID))
 		self.__My_con.commit()
@@ -229,37 +232,35 @@ class Connection_customer(object):
 		self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s ",([ID]))
 		self.__My_con.commit()
 
-con1=Connection_customer()
-con1.Connect_to_customer()
-#con1.Show_tables()
-#con1.Use_table("Cart")
-#con1.Insert_Cus_Info("22")
-#con1.Del_Cus_Info_Id(999)
-#Del=['Apple']
-#print(Global_var.Commodity_list)
-#con1.Renew_Cart(Global_var.Cart_list)
-#con1.Del_Cart(Del)
-<<<<<<< HEAD
-flag=con1.Has_cus(8)
-print(flag)
-# con1.Create_Pur_His(1)
-# con1.Creat_cart(1)
-# con1.Add_to_cart(1,{'Apple':1,'Cola':2})
-#con1.Drop_cus_cart(1)
-#con1.Renew_Cart(Global_var.Cart_list)
-#con1.Renew_Pur_History(Global_var.Pur_History_List)
-#con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
-=======
-con1.Insert_Cus_Info(23)
+if __name__=="__main__":
+
+	con1=Connection_customer()
+	con1.Connect_to_customer()
+# # #con1.Show_tables()
+# # #con1.Use_table("Cart")
+	con1.Insert_Cus_Info("1597204332WalkInCustomer")
+# con1.Del_Cus_Info_Id(999)
+# Del=['Apple']
+# #print(Global_var.Commodity_list)
+# #con1.Renew_Cart(Global_var.Cart_list)
+# #con1.Del_Cart(Del)
+
+	flag=con1.Has_cus("1597204332WalkInCustomer")
+	print(flag)
+# # con1.Create_Pur_His(1)
+# # con1.Creat_cart(1)
+# # con1.Add_to_cart(1,{'Apple':1,'Cola':2})
+# #con1.Drop_cus_cart(1)
+# #con1.Renew_Cart(Global_var.Cart_list)
+# #con1.Renew_Pur_History(Global_var.Pur_History_List)
+# #con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
+
+# con1.Insert_Cus_Info(23)
 # con1.Creat_cart(1)
 # con1.Add_to_cart(1,{'Chips':1,'Moutai':2})
 # #con1.Drop_cus_cart(1)
 # #con1.Renew_Cart(Global_var.Cart_list)
 # #con1.Renew_Pur_History(Global_var.Pur_History_List)
 # #con1.Add_to_Pur_His(1,{'Apple':1,'Cola':2})
->>>>>>> master
+
 # con1.Settlement(1)
-
-
-	
-
