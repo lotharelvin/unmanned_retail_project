@@ -13,7 +13,7 @@ import defines
 class Cus_exe_thd(threading.Thread,object):
 	def __init__(self,FaceID,Thread_id,SQL_con):
 		threading.Thread.__init__(self)
-		self.__This_face="\"%s\"" % FaceID
+		self.__This_face="%s" FaceID
 		self.__This_id=None
 		self.__This_Thread=Thread_id
 		self.lock=threading.Lock()
@@ -33,6 +33,7 @@ class Cus_exe_thd(threading.Thread,object):
 			#new customer
 			self.SQL_con.Insert_Cus_Info(self.__This_face)
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
+			print(self.__This_id)
 			self.SQL_con.Create_cart(self.__This_id)
 			self.SQL_con.Create_Pur_His(self.__This_id)	
 		print("add and Create done")		
