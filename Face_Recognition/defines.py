@@ -25,7 +25,7 @@ class CapCustomer(object):
         return self.state
 
     def get_cus_FaceID(self):
-        FaceID = self.customer_id + self.group_id
+        FaceID = int(self.customer_id)
         return FaceID
 
     def get_cus_type(self):
@@ -40,14 +40,19 @@ def image_to_base64(image):
     return image_code
 
 
-def capture_customer():
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    image = image_to_base64(frame)
-    #cv2.imshow('test', frame)
-    cap.release()
-    cv2.waitKey(10)
-    return image
+def capture_video():
+    capture = cv2.VideoCapture(0)
+    i = 0
+    while True:
+        ret, image = capture.read()
+        #cv2.imshow("test", image)
+        i = i+1
+        #print(i)
+        if cv2.waitKey(10) == 27 or i==10:
+
+            i = 0
+            return image
+            break
 
 
 def add_customer(image, groupIdList):
@@ -152,8 +157,9 @@ def search_customer(image):
 
 
 def get_capcus_FaceID():
-    image = capture_customer()
-    customer = search_customer(image)
+    image = capture_video()
+    image_base64 = image_to_base64(image)
+    customer = search_customer(image_base64)
     FaceID = CapCustomer.get_cus_FaceID(customer)
     del customer
     gc.collect()

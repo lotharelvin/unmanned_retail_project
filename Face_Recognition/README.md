@@ -2,7 +2,7 @@
 
 Author：KCLi2000 likwokc@mail2.sysu.edu.cn
 
-Version: v1.1.2
+Version: v1.1.3
 
 #### 依赖库
 
@@ -75,6 +75,7 @@ face pic not found
 | v1.1.0 | 增加了对Walk-in客户的现场注册并识别功能，优化了FaceID的输出接口 |
 | v1.1.1 | 针对无门禁进入场景，优化了对Walk-in客户注册识别的功能        |
 | v1.1.2 | 解决了一个有关匹配率低也返回匹配成功的bug                    |
+| v1.1.3 | 解决了一个摄像头bug并将FaceID类型修改为int                   |
 
 #### 环境
 
