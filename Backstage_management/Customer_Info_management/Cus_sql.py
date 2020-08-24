@@ -59,7 +59,7 @@ class Connection_customer(object):
 		else:
 			return True
 
-	def Insert_Cus_Info(self,FaceID:str):
+	def Insert_Cus_Info(self,FaceID):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
 		self.__My_cursor.execute("SELECT * FROM Customer_Info WHERE FACEID = %s " % (FaceID))
 		x=self.__My_cursor.fetchone()
@@ -71,7 +71,7 @@ class Connection_customer(object):
 		else:
 			print("This person already in record")
 
-	def Del_Cus_Info_Face(self,FaceID:str):
+	def Del_Cus_Info_Face(self,FaceID):
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
 		sql=("DELETE FROM Customer_Info WHERE FACEID = %s")
 		val=([FaceID])
@@ -85,14 +85,13 @@ class Connection_customer(object):
 		self.__My_cursor.execute(sql , val)
 		self.__My_con.commit()
 
-	def Get_Id(self,FaceID:str):
+	def Get_Id(self,FaceID):
 		ID=-1
 		self.__My_cursor.execute("ALTER TABLE Customer_Info")
-		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s' " % (FaceID))
-		self.__My_cursor.fetchall()
-		for x in self.__My_cursor:
-			print(x)
-			ID=x[0]
+		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s " % FaceID)
+		x=self.__My_cursor.fetchall()
+		ID=x[0]
+		ID=ID[0]
 		return ID
 		
 
@@ -246,9 +245,8 @@ if __name__=="__main__":
 # #print(Global_var.Commodity_list)
 # #con1.Renew_Cart(Global_var.Cart_list)
 # #con1.Del_Cart(Del)
-	con1.Insert_Cus_Info("\'18797820796Customer\'")
-	# a=con1.Get_Id("\"18797820796Customer\"")
-	
+	a=con1.Get_Id(1597824723)
+	print(a)
 # # con1.Create_Pur_His(1)
 # # con1.Creat_cart(1)
 # # con1.Add_to_cart(1,{'Apple':1,'Cola':2})

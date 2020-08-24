@@ -13,7 +13,7 @@ import defines
 class Cus_exe_thd(threading.Thread,object):
 	def __init__(self,FaceID,Thread_id,SQL_con):
 		threading.Thread.__init__(self)
-		self.__This_face="%s" FaceID
+		self.__This_face=FaceID
 		self.__This_id=None
 		self.__This_Thread=Thread_id
 		self.lock=threading.Lock()
@@ -33,11 +33,13 @@ class Cus_exe_thd(threading.Thread,object):
 			#new customer
 			self.SQL_con.Insert_Cus_Info(self.__This_face)
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
-			print(self.__This_id)
-			self.SQL_con.Create_cart(self.__This_id)
-			self.SQL_con.Create_Pur_His(self.__This_id)	
-		print("add and Create done")		
-		self.lock.realease()
+			if self.__This_id!=-1:
+				self.SQL_con.Create_cart(self.__This_id)
+				self.SQL_con.Create_Pur_His(self.__This_id)	
+				print("Add and Create done")	
+			else:
+				print("Invalid ID")	
+		self.lock.release()
 
 	def Shopping(self):
 		pass
@@ -47,6 +49,7 @@ class Cus_exe_thd(threading.Thread,object):
 	def Settlement(self):
 		pass
 		#wait for futher recognition
+		# make sure delete this people in cart and add timestamp to pur_history
 	def run(self):
 		self.Check_and_Cart()
 
@@ -73,14 +76,15 @@ class Main_thread(threading.Thread,object):
 		def Create(self):
 			while True:
 				print('detecting')
-				FaceID=defines.get_cus_FaceID()
+				FaceID=defines.get_capcus_FaceID()
 				if FaceID not in self.Main_thread._Face_list:
-					print('new customer')
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
 					self.Main_thread._Thread_list.append(Thread_temp)
 					Thread_temp.start()
 					self.Main_thread._People_in+=1;
+				else:
+					print("This customer exists")
 				
 			
 	class Close_cus_thread(threading.Thread,object):
