@@ -7,7 +7,8 @@ sys.path.append('/Users/ouyangyikang/unmanned_retail_project')
 sys.path.append('/Users/ouyangyikang/unmanned_retail_project/Face_Recognition')
 import Global_var
 import defines 
-
+import socket
+import json
 
 
 class Cus_exe_thd(threading.Thread,object):
@@ -26,7 +27,7 @@ class Cus_exe_thd(threading.Thread,object):
 		if flag== True:
 			#old customer
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
-			print(self.__This_id)
+			#print(self.__This_id)
 			self.SQL_con.Create_cart(self.__This_id)
 
 		else:
@@ -64,19 +65,20 @@ class Main_thread(threading.Thread,object):
 		self._People_in=0
 		self._Thread_list=[]
 		self._Face_list=[]
-		self.Creation=self.Create_cus_thread(self)
-		self.Closure=self.Close_cus_thread(self)
-
+		self.Creation_thd=self.Create_cus_thread(self)
+		self.Closure_thd=self.Close_cus_thread(self)
+		self.Shopping_thd=self.Shopping_thread(self)
 	class Create_cus_thread(threading.Thread,object):
 		"""docstring for Create_thread"""
 		def __init__(self, Main_thread):
 			self.Main_thread=Main_thread
-
+			threading.Thread.__init__(self)
 			
 		def Create(self):
 			while True:
 				print('detecting')
 				FaceID=defines.get_capcus_FaceID()
+				print(FaceID)
 				if FaceID not in self.Main_thread._Face_list:
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
@@ -85,18 +87,51 @@ class Main_thread(threading.Thread,object):
 					self.Main_thread._People_in+=1;
 				else:
 					print("This customer exists")
-				
+		def run(self):
+			self.Create()
+
+
+	class Shopping_thread(threading.Thread,object):
+		def __init__(self,Main_thread):
+			threading.Thread.__init__(self)
+			self.Main_thread=Main_thread
+
+		def Listen(self):
+			print("Try to make socket")
+			s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+			s.bind(('192.168.43.125',4396))
+			s.listen(1)
+
+			while True:
+				try:
+					c,c_addr=s.accept()
+					while True:
+						data=c.recv(1024)
+						goods=json.loads(data)
+
+						
+
+				except KeyboardInterrupt:
+					print("Quit")
+
+
+		def run(self):
+			self.Listen()
+					
 			
 	class Close_cus_thread(threading.Thread,object):
 		"""docstring for Create_thread"""
 		def __init__(self, Main_thread):
+			threading.Thread.__init__(self)
 			self.Main_thread=Main_thread
 		#todo :wait for settlement signal to close a thread
 
 
 
 	def run(self):
-		self.Creation.Create()
+		self.Creation_thd.start()
+		self.Shopping_thd.start()
+
 
 
 

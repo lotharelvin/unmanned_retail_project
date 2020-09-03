@@ -53,7 +53,7 @@ class Connection_customer(object):
 		self.__My_cursor.execute("SELECT ID FROM Customer_Info WHERE FACEID = %s "% (FaceID))
 		
 		Mycheck=self.__My_cursor.fetchall();
-		print(Mycheck)
+		#print(Mycheck)
 		if len(Mycheck) == 0:
 			return False
 		else:
