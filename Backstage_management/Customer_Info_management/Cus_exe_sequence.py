@@ -28,14 +28,14 @@ class Cus_exe_thd(threading.Thread,object):
 			#old customer
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
 			#print(self.__This_id)
-			self.SQL_con.Create_cart(self.__This_id)
+			#self.SQL_con.Create_cart(self.__This_id)
 
 		else:
 			#new customer
 			self.SQL_con.Insert_Cus_Info(self.__This_face)
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
 			if self.__This_id!=-1:
-				self.SQL_con.Create_cart(self.__This_id)
+				#self.SQL_con.Create_cart(self.__This_id)
 				self.SQL_con.Create_Pur_His(self.__This_id)	
 				print("Add and Create done")	
 			else:
@@ -106,8 +106,25 @@ class Main_thread(threading.Thread,object):
 				try:
 					c,c_addr=s.accept()
 					while True:
-						data=c.recv(1024)
-						goods=json.loads(data)
+						data=c.recv(1024).decode('utf-8')
+						#print(data)
+						try:
+							cart_info=json.loads(data)
+							#print(cart_info)
+							#loads successfully
+						except json.decoder.JSONDecodeError:
+							break
+						FaceID=cart_info['Face_ID']
+						if FaceID==0:
+							break
+						cart={}
+						for good in cart_info["Cart"]:
+							if good in cart:
+								cart[good]+=1
+							else:
+							 	cart[good]=1
+
+						print(cart)	
 
 						
 

@@ -2,7 +2,7 @@ import pymysql
 import mysql.connector
 def create_table():
     # 创建连接
-    conn = pymysql.connect(host='localhost',user='root',password='001015',charset='utf8mb4')
+    conn = pymysql.connect(host='localhost',user='root',password='123456aa',charset='utf8mb4')
     # 创建游标
     cursor = conn.cursor()
     # 创建数据库的sql(如果数据库存在就不创建，防止异常)
@@ -11,7 +11,7 @@ def create_table():
     # 执行创建数据库的sql
     cursor.execute(sql)
     #连接本地数据库
-    db = pymysql.connect("localhost","root","428016","commodity")
+    db = pymysql.connect("localhost","root","123456aa","commodity")
 
     #创建游标
     cursor = db.cursor()
