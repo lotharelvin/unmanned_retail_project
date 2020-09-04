@@ -19,7 +19,7 @@ class Cus_exe_thd(threading.Thread,object):
 		self.__This_Thread=Thread_id
 		self.lock=threading.Lock()
 		self.SQL_con=SQL_con
-
+		self.stop_flag=False
 	def Check_and_Cart(self):
 		self.lock.acquire()
 		flag=self.SQL_con.Has_cus(self.__This_face)
@@ -41,18 +41,23 @@ class Cus_exe_thd(threading.Thread,object):
 			else:
 				print("Invalid ID")	
 		self.lock.release()
-
 	def Shopping(self):
 		pass
 		#todo wait for shelf recognition
 		#which should block here
 
-	def Settlement(self):
-		pass
+	def Settlement(self,cart):
+		self.SQL_con.Add_to_Pur_His(self.__This_id,cart)
+		self.stop_flag=True
 		#wait for futher recognition
 		# make sure delete this people in cart and add timestamp to pur_history
 	def run(self):
 		self.Check_and_Cart()
+		while self.stop_flag==False:
+			pass
+		print("Thread")
+		print(self.Thread_id)
+		print("exit")
 
 
 
@@ -83,7 +88,9 @@ class Main_thread(threading.Thread,object):
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
 					self.Main_thread._Thread_list.append(Thread_temp)
+					Thread_temp.setDaemon(True)   
 					Thread_temp.start()
+					Thread_temp.join()
 					self.Main_thread._People_in+=1;
 				else:
 					print("This customer exists")
@@ -123,11 +130,10 @@ class Main_thread(threading.Thread,object):
 								cart[good]+=1
 							else:
 							 	cart[good]=1
-
-						print(cart)	
-
-						
-
+						Face_idx=self._Face_list.index(FaceID)
+						This_cus_thd=self._Thread_list[Face_idx]
+						This_cus_thd.Settlement(cart)
+						#print(cart)
 				except KeyboardInterrupt:
 					print("Quit")
 
@@ -146,6 +152,7 @@ class Main_thread(threading.Thread,object):
 
 
 	def run(self):
+		self._Cus_con.Renew_Pur_History(Global_var.commodity_list)
 		self.Creation_thd.start()
 		self.Shopping_thd.start()
 
