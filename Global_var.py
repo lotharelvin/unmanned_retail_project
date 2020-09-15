@@ -1,4 +1,4 @@
-
+import pandas as pd
 Commodity_type=['Fruit','Snack','Alcohol','Beverage','Cigarette','Staple_food','Personal_care']
 
 Commodity_dict={
@@ -9,7 +9,15 @@ Commodity_dict={
 	'Moutai':'Alcohol'
 }
 
-Commodity_list=['Banana','Chips','Cola','Moutai','Hape','Apple',]
-Cart_list=['ID','Commodity_Test','Apple','Banana','Chips','Cola','Moutai','Hape','ajax']
-Pur_History_List=['ID','Commodity_Test','Apple','Banana','Chips','Cola','Moutai','Hape','Last_Time']
+Commodity_list=['Apple','Banana','Chips','Cola','Moutai']
+# Cart_list=['ID','Apple','Banana','Chips','Cola','Moutai','Hape','ajax']
+Pur_History_List=['ID','Apple','Banana','Chips','Cola','Moutai','Last_Time']
 Customer_table_type=['Cart','Customer_Info','Pur_History']
+
+Shelf_dict={
+	'Apple':1,
+	'Banana':2,
+	'Chips':3,
+	'Cola':4,
+	'Moutai':5
+}

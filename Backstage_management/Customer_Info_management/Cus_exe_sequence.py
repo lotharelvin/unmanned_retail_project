@@ -152,7 +152,7 @@ class Main_thread(threading.Thread,object):
 
 
 	def run(self):
-		self._Cus_con.Renew_Pur_History(Global_var.commodity_list)
+		self._Cus_con.Renew_Pur_History(Global_var.Pur_History_List)
 		self.Creation_thd.start()
 		self.Shopping_thd.start()
 
