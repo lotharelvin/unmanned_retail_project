@@ -9,9 +9,9 @@ Commodity_dict={
 	'Moutai':'Alcohol'
 }
 
-Commodity_list=['Apple','Banana','Chips','Cola','Moutai','double+mint+toothpaste_DARLIE_175g']
+Commodity_list=['Apple','Banana','Chips','Cola','Moutai','tooth_paste']
 # Cart_list=['ID','Apple','Banana','Chips','Cola','Moutai','Hape','ajax']
-Pur_History_List=['ID','Apple','Banana','Chips','Cola','Moutai','Last_Time','double+mint+toothpaste_DARLIE_175g']
+Pur_History_List=['ID','Apple','Banana','Chips','Cola','Moutai','Last_Time','tooth_paste']
 Customer_table_type=['Cart','Customer_Info','Pur_History']
 
 Shelf_dict={

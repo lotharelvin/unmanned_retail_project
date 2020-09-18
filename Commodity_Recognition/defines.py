@@ -26,7 +26,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         super(Ui_MainWindow, self).__init__(parent)
 
         self.timer_camera = QtCore.QTimer()  # 初始化定时器
-        self.cap = cv2.VideoCapture(2)  # 初始化摄像头
+        self.cap = cv2.VideoCapture(1)  # 初始化摄像头
         #self.cap1 = cv2.VideoCapture(1)
         self.CAM_NUM = 0
         self.set_ui()
@@ -202,7 +202,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def commodity_recog(self, cap):
         self.textBrowser.setText('')
-        cap1 = cv2.VideoCapture(1)
+        cap1 = cv2.VideoCapture(0)
         Face_ID = self.face_recog(cap1)
         self.printf('')
         self.printf('待付款商品：')

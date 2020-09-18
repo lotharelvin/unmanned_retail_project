@@ -45,8 +45,7 @@ def image_to_base64(image):
 
 
 def capture_video():
-    show=cv2.CAP_DSHOW
-    capture = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(2)
     i = 0
     while True:
         ret, image = capture.read()

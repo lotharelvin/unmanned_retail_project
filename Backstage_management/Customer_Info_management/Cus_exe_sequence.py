@@ -126,14 +126,18 @@ class Main_thread(threading.Thread,object):
 
 						cart={}
 						for good in cart_info["Cart"]:
+							if good== 'double+mint+toothpaste_DARLIE_175g':
+								good='tooth_paste'
 							if good in cart:
 								cart[good]+=1
 							else:
 							 	cart[good]=1
-						Face_idx=self.Main_thread._Face_list.index(FaceID)
-						This_cus_thd=self.Main_thread._Thread_list[Face_idx]
-						This_cus_thd.Settlement(cart)
-						
+						try:
+							Face_idx=self.Main_thread._Face_list.index(FaceID)
+							This_cus_thd=self.Main_thread._Thread_list[Face_idx]
+							This_cus_thd.Settlement(cart)
+						except ValueError:
+							break
 						#print(cart)
 						# close this thd
 						This_cus_thd.stop_flag=True
