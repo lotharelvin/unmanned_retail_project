@@ -27,15 +27,12 @@ class Cus_exe_thd(threading.Thread,object):
 		if flag== True:
 			#old customer
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
-			#print(self.__This_id)
-			#self.SQL_con.Create_cart(self.__This_id)
-
 		else:
 			#new customer
 			self.SQL_con.Insert_Cus_Info(self.__This_face)
 			self.__This_id=self.SQL_con.Get_Id(self.__This_face)
 			if self.__This_id!=-1:
-				#self.SQL_con.Create_cart(self.__This_id)
+				self.SQL_con.Create_cart(self.__This_id)
 				self.SQL_con.Create_Pur_His(self.__This_id)	
 				print("Add and Create done")	
 			else:
@@ -85,6 +82,8 @@ class Main_thread(threading.Thread,object):
 				FaceID=defines.get_capcus_FaceID()
 				print(FaceID)
 				if FaceID not in self.Main_thread._Face_list:
+					if FaceID==0:
+						continue
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
 					self.Main_thread._Thread_list.append(Thread_temp)
@@ -104,15 +103,15 @@ class Main_thread(threading.Thread,object):
 			self.Main_thread=Main_thread
 
 		def Listen(self):
-			print("Try to make socket")
 			s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-			s.bind(('192.168.43.125',4396))
+			s.bind(('127.0.0.1',4396))
 			s.listen(1)
 
 			while True:
 				try:
 					c,c_addr=s.accept()
 					while True:
+						print("recv data")
 						data=c.recv(1024).decode('utf-8')
 						#print(data)
 						try:
@@ -124,16 +123,22 @@ class Main_thread(threading.Thread,object):
 						FaceID=cart_info['Face_ID']
 						if FaceID==0:
 							break
+
 						cart={}
 						for good in cart_info["Cart"]:
 							if good in cart:
 								cart[good]+=1
 							else:
 							 	cart[good]=1
-						Face_idx=self._Face_list.index(FaceID)
-						This_cus_thd=self._Thread_list[Face_idx]
+						Face_idx=self.Main_thread._Face_list.index(FaceID)
+						This_cus_thd=self.Main_thread._Thread_list[Face_idx]
 						This_cus_thd.Settlement(cart)
+						
 						#print(cart)
+						# close this thd
+						This_cus_thd.stop_flag=True
+						self.Main_thread._Face_list.remove(Face_idx)
+						self.Main_thread._Thread_list.remove(This_cus_thd)
 				except KeyboardInterrupt:
 					print("Quit")
 

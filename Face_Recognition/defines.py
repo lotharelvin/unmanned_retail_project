@@ -45,7 +45,7 @@ def capture_video():
     i = 0
     while True:
         ret, image = capture.read()
-        #cv2.imshow("test", image)
+        # cv2.imshow("test", image)
         i = i+1
         #print(i)
         if cv2.waitKey(10) == 27 or i==10:

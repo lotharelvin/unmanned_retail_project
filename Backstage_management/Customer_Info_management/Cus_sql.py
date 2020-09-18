@@ -174,18 +174,28 @@ class Connection_customer(object):
 			if x not in New_list:
 				self.__My_cursor.execute("ALTER TABLE Pur_History DROP COLUMN %s" % (x))
 				self.__My_con.commit()
-
+				#for table value
+				self.__My_cursor.execute("ALTER TABLE Value DROP COLUMN %s" % (x))
+				self.__My_con.commit()
 		for New_item in New_list:
 			if New_item not in Old_List:
-				print(New_item)
+				#print(New_item)
 				sql="ALTER TABLE Pur_History add COLUMN  %s INT UNSIGNED DEFAULT 0"
 				val=(New_item)
 				self.__My_cursor.execute(sql % val)
 				self.__My_con.commit()
+				#for table value
+				sql="ALTER TABLE Value add COLUMN  %s INT UNSIGNED DEFAULT 0"
+				val=(New_item)
+				self.__My_cursor.execute(sql % val)
+				self.__My_con.commit()
+
 
 	def Create_Pur_His(self,ID):
 		self.__My_cursor=self.__My_con.cursor()
 		self.__My_cursor.execute("INSERT INTO Pur_History (ID) VALUES (%s)" % (ID))
+		self.__My_con.commit()
+		self.__My_cursor.execute("INSERT INTO Value (ID) VALUES (%s)" % (ID))
 		self.__My_con.commit()
 
 	def Add_to_Pur_His(self,ID,Pur_dict):
@@ -198,23 +208,24 @@ class Connection_customer(object):
 			return
 
 		for item in Pur_dict:
-			# print(item)
 			self.__My_cursor.execute("SELECT %s FROM Pur_History WHERE ID = %s" % (item,ID))
 			Origin_val=self.__My_cursor.fetchall()
 			Origin_val=list(Origin_val[0])
-			# print(Origin_val)
 			New_val=Origin_val[0]+Pur_dict[item]
-			# print(New_val)
 			self.__My_cursor.execute("UPDATE Pur_History SET %s = %s WHERE ID = %s" % (item,New_val,ID))
+			self.__My_con.commit()
+
+			self.__My_cursor.execute("UPDATE Value SET %s = %s WHERE ID = %s" % (item,New_val,ID))
 			self.__My_con.commit()
 		
 		self.__My_cursor.execute("UPDATE Pur_History SET Last_Time = %s WHERE ID = %s" % (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),ID))
 		self.__My_con.commit()
 
-	def Settlement(self,ID):
+	def Settlement(self,ID,Cart):
+		# This function is useless now 
 		self.__My_cursor=self.__My_con.cursor()
 		for x in Global_var.Commodity_list:
-			print(x)
+			# print(x)
 			self.__My_cursor.execute("SELECT %s FROM Cart WHERE ID = %s  " % (x,ID))
 			This_Cart=self.__My_cursor.fetchall()
 			This_Cart=list(This_Cart[0])
@@ -230,7 +241,7 @@ class Connection_customer(object):
 			self.__My_cursor.execute("UPDATE Pur_History SET %s = %s WHERE ID =%s" % (x,Now_val,ID))
 			self.__My_con.commit()
 
-		self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s ",([ID]))
+		# self.__My_cursor.execute("DELETE FROM Cart WHERE ID = %s ",([ID]))
 		self.__My_con.commit()
 
 if __name__=="__main__":

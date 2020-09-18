@@ -22,7 +22,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
         super(Ui_MainWindow, self).__init__(parent)
 
         self.timer_camera = QtCore.QTimer()  # 初始化定时器
-        self.cap = cv2.VideoCapture(0)  # 初始化摄像头
+        self.cap = cv2.VideoCapture(3)  # 初始化摄像头
         #self.cap1 = cv2.VideoCapture(1)
         self.CAM_NUM = 0
         self.set_ui()
@@ -198,7 +198,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def commodity_recog(self, cap):
         self.textBrowser.setText('')
-        cap1 = cv2.VideoCapture(1)
+        cap1 = cv2.VideoCapture(4)
         Face_ID = self.face_recog(cap1)
         self.printf('')
         self.printf('待付款商品：')
@@ -296,7 +296,7 @@ def get_temp_cart(content):
 
 def data_client(data):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect(('192.168.43.125', 4396))
+    client.connect(('127.0.0.1', 4396))
     print('success')
     json_string = bytes(json.dumps(data), encoding='utf-8')
     client.send(json_string)
