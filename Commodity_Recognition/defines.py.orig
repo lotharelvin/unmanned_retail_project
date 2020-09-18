@@ -13,10 +13,6 @@ from PyQt5.QtWidgets import *
 
 import socket
 
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
-
-
 #Face_ID = ''
 
 #groupIdList = ''
@@ -26,7 +22,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
         super(Ui_MainWindow, self).__init__(parent)
 
         self.timer_camera = QtCore.QTimer()  # 初始化定时器
-        self.cap = cv2.VideoCapture(2)  # 初始化摄像头
+<<<<<<< HEAD
+        self.cap = cv2.VideoCapture(3)  # 初始化摄像头
+=======
+        self.cap = cv2.VideoCapture(1)  # 初始化摄像头
+>>>>>>> 912a532148f5f6a154fc3701f0b506d7a7d7d2b4
         #self.cap1 = cv2.VideoCapture(1)
         self.CAM_NUM = 0
         self.set_ui()
@@ -202,7 +202,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
     def commodity_recog(self, cap):
         self.textBrowser.setText('')
-        cap1 = cv2.VideoCapture(1)
+<<<<<<< HEAD
+        cap1 = cv2.VideoCapture(4)
+=======
+        cap1 = cv2.VideoCapture(0 + cv2.CAP_DSHOW)
+>>>>>>> 912a532148f5f6a154fc3701f0b506d7a7d7d2b4
         Face_ID = self.face_recog(cap1)
         self.printf('')
         self.printf('待付款商品：')

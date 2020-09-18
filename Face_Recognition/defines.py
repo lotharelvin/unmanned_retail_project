@@ -5,6 +5,10 @@ import base64
 import time
 import gc
 
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
+
 
 class CapCustomer(object):
     """CapCustomer Class"""
@@ -41,6 +45,7 @@ def image_to_base64(image):
 
 
 def capture_video():
+    show=cv2.CAP_DSHOW
     capture = cv2.VideoCapture(0)
     i = 0
     while True:
