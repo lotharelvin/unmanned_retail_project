@@ -296,7 +296,7 @@ def get_temp_cart(content):
 
 def data_client(data):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect(('127.0.0.1', 4396))
+    client.connect(('192.168.43.125', 4396))
     print('success')
     json_string = bytes(json.dumps(data), encoding='utf-8')
     client.send(json_string)
