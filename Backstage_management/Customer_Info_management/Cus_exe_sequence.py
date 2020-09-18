@@ -87,9 +87,9 @@ class Main_thread(threading.Thread,object):
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
 					self.Main_thread._Thread_list.append(Thread_temp)
-					Thread_temp.setDaemon(True)   
+					# Thread_temp.setDaemon(True)   
 					Thread_temp.start()
-					Thread_temp.join()
+					# Thread_temp.join()
 					self.Main_thread._People_in+=1;
 				else:
 					print("This customer exists")
