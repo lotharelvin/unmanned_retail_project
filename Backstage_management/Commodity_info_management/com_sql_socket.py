@@ -277,16 +277,21 @@ def Delete_From(ID):
         db.close()
 def main():                 #用于测试各个函数是否正常
     create_table()                          #建表
+    count = 0
     for i in Global_var.Commodity_list:
-        n=0
-        insert_into(n,i,0,0,0,'none')    #输入商品信息 id为Commodity_list中的顺序  名称为商品名  价格、库存、货架号默认为0，类型默认为none
-        n+=1
+        print(count)
+        insert_into(count,i,0,0,0,'none')    #输入商品信息 id为Commodity_list中的顺序,用count输入  名称为商品名  价格、库存、货架号默认为0，类型默认为none
+        count +=1
+    
+    #insert_into(1,'yagao',15,100,1,'per')    #输入商品信息
+    #select_form(1)                           #查询信息
     #Update_Set_Name(1,'nige')                #更改商品名称
     #Update_Set_Price(1,10)                   #更改商品价格
     #Update_Set_Inventory(1,99)               #更改商品库存
     #Update_Set_Shelf(1,2)                    #更改商品货架号
     #Update_Set_Type(1,'personal_care')       #更改商品类行
     #Delete_From(1)                          #从库中删除商品
+
 
 if __name__ == "__main__":
     main()
