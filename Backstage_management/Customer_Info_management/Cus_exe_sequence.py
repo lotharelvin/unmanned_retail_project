@@ -5,11 +5,12 @@ import Cus_sql
 import sys
 sys.path.append('/Users/ouyangyikang/unmanned_retail_project')
 sys.path.append('/Users/ouyangyikang/unmanned_retail_project/Face_Recognition')
+sys.path.append('/Users/ouyangyikang/unmanned_retail_project/Backstage_management/Commodity_info_management')
 import Global_var
 import defines 
 import socket
 import json
-
+import com_sql_socket as com_sql
 
 class Cus_exe_thd(threading.Thread,object):
 	def __init__(self,FaceID,Thread_id,SQL_con):
