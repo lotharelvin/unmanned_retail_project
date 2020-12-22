@@ -107,6 +107,56 @@ def select_form(ID):
         # 关闭数据库连接
         db.close()
 
+def Set_Inventory_from_Dirt(dirt):                #从输入的字典批量更改商品库存
+    print("批量更改库存！")
+    # 打开数据库连接
+    db = pymysql.connect("localhost","root","428016","commodity")
+
+    # 使用cursor()方法获取操作游标
+    cursor = db.cursor()
+    # SQL 查询语句
+    for key in dirt:
+        sql = """SELECT * FROM comm WHERE Name = '%s'"""%(key)              
+        try:
+            # 执行SQL语句
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            if(not len(results)):
+                print("暂无此商品")
+                
+            Old_Inventory = results[3]                 #获取旧库存
+            #更改为新库存
+            New_Inventory = Old_Inventory - dirt[key]
+            sql = """UPDATE comm SET Inventory = %s WHERE Name = '%s'"""%(New_Inventory,key)
+            #快来处理一下这司马的缩进把  我草泥马
+            try:
+                # 执行SQL语句
+                cursor.execute(sql)
+                # 提交到数据库执行
+                db.commit()
+                print("更新数据成功")
+
+            except Exception as e:
+                print("数据更新出错：case %s"%e)
+                #发生错误是回滚
+                db.rollback()
+
+            finally:
+                # 关闭游标连接
+                cursor.close()
+                # 关闭数据库连接
+                db.close()
+
+        except Exception as e:
+            print("查询出错：case%s"%e)
+
+        finally:
+            # 关闭游标连接
+            cursor.close()
+            # 关闭数据库连接
+            db.close()
+
+
 def Update_Set_Name(ID,New_Name):         # 更改商品名
     #打开数据库链接
     print("更新数据库操作 更改商品名称！")
