@@ -47,6 +47,7 @@ class Cus_exe_thd(threading.Thread,object):
 	def Settlement(self,cart):
 		self.SQL_con.Add_to_Pur_His(self.__This_id,cart)
 		self.stop_flag=True
+		com_sql.Set_Inventory_from_Dirt(cart)
 		#wait for futher recognition
 		# make sure delete this people in cart and add timestamp to pur_history
 	def run(self):
@@ -76,7 +77,7 @@ class Main_thread(threading.Thread,object):
 		def __init__(self, Main_thread):
 			self.Main_thread=Main_thread
 			threading.Thread.__init__(self)
-			
+			self.lock=threading.Lock()
 		def Create(self):
 			while True:
 				print('detecting')
@@ -85,13 +86,15 @@ class Main_thread(threading.Thread,object):
 				if FaceID not in self.Main_thread._Face_list:
 					if FaceID==0:
 						continue
+					self.lock.acquire()
 					self.Main_thread._Face_list.append(FaceID)
 					Thread_temp=Cus_exe_thd(FaceID,self.Main_thread._People_in,self.Main_thread._Cus_con)
 					self.Main_thread._Thread_list.append(Thread_temp)
 					# Thread_temp.setDaemon(True)   
 					Thread_temp.start()
 					# Thread_temp.join()
-					self.Main_thread._People_in+=1;
+					self.Main_thread._People_in+=1
+					self.lock.release()
 				else:
 					print("This customer exists")
 		def run(self):
@@ -157,7 +160,11 @@ class Main_thread(threading.Thread,object):
 		def __init__(self, Main_thread):
 			threading.Thread.__init__(self)
 			self.Main_thread=Main_thread
+			self.lock=threading.Lock()
 		#todo :wait for settlement signal to close a thread
+		def run(self):
+			self.lock.acquire()
+			
 
 
 
