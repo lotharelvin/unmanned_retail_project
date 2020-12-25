@@ -1,0 +1,104 @@
+1::Fresh Grade Legs::meat
+2::Fresh Grade Breast::meat
+3::Chicken Drumsticks::meat
+4::Chicken Wings::meat
+5::Minced SteakI::meat
+6::Pigs Liver::meat
+7::Pigs feet::meat
+8::Pork Chops ::meat
+9::Rolled Pork loin::meat
+10::Rolled Pork Belly::meat
+11::Spare Rib Pork chops::meat
+12::Pork sausage meat::meat
+13::Pork Burgers::meat
+14::Pork-pieces::meat
+15::Joint::meat
+16::Stewing Beef::meat
+17::Steak & Kidney::meat
+18::Frying steak::meat
+19::Minced Beefs::meat
+20::Rump Steak::meat
+21::Leg Beef::meat
+22::OX-Tail::meat
+23::OX-heart::meat
+24::OX-Tongues::meat
+25::Barnsley Chops::meat
+26::Herring::Marine fish
+27::Salmon::Marine fish
+28::Cod::Marine fish
+29::Tuna::Marine fish
+30::Plaice::Marine fish
+31::Octopus::Marine fish
+32::Squid::Marine fish
+33::Dressed squid::Marine fish
+34::Mackerel::Marine fish
+35::Haddock::Drama|Romance
+36::Trout::Drama
+37::Cod Fillets::Marine fish
+38::Conger::Marine fish
+39::Sea Bream::Marine fish
+40::Red Mullet::Marine fish
+41::Smoked Salmon::Marine fish
+42::Smoked mackerel with::Marine fish
+43::crushed pepper corn::Marine fish
+44::Herring roes::Marine fish
+45::Boiled Cod roes::Marine fish
+46::Oyster::Marine fish
+47::Mussel::Marine fish
+48::Crab::Marine fish
+49::Prawn::Marine fish
+50::King Prawns::Marine fish
+51::Potato::Vegetables
+52::Carrot::Vegetables
+53::Onion::Vegetables
+54::Aubergine::Vegetables
+55::Celery::Vegetables
+56::White Cabbage::Vegetables
+57::Red cabbage::Vegetables
+58::Cucumber::Vegetables
+59::Tomato::Vegetables
+60::Radish::Vegetables
+61::Mooli::Vegetables
+62::Watercress::Vegetables
+63::Baby corn::Vegetables
+64::Sweet corn::Vegetables
+65::Cauliflower::Vegetables
+66::Spring onions::Vegetables
+67::Garlic::Vegetables
+68::Ginger::Vegetables
+69::Chinese leaves::Vegetables
+70::Leeks::Vegetables
+71::Mustard & cress::Vegetables
+72::Green Pepper::Vegetables
+73::Red pepper::Vegetables
+74::Yellow pepper::Vegetables
+75::Mushroom::Vegetables
+76::Long rice::staple food
+77::Pudding rice::staple food
+78::Brown rice::staple food
+79::THAI Fragrant rice::staple food
+80::Glutinous rice::staple food
+81::Strong flour::staple food
+82::Plain flour::staple food
+83::Self- raising flour::staple food
+84::Whole meal flour::staple food
+85::Brown sugar::staple food
+86::dark Brown Sugar::staple food
+87::Custer sugar::staple food
+88::Icing Sugar::staple food
+89::Rock Sugar::staple food
+90::Noodles::staple food
+92::Instant noodles::staple food
+93::Soy sauce::staple food
+94::Vinegar::staple food
+95::Cornstarch::staple food
+96::Maltose::staple food
+97::Sesame Seeds::staple food
+98::Sesame oil::staple food
+99::Oyster sauce::staple food
+100::Pepper::staple food
+101::Apple::Fruit
+102::Banana::Fruit
+103::Chips::Snack
+104::Cola::Beverage
+105::Moutai::Alcohol
